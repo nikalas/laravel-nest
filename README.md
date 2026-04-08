@@ -22,8 +22,8 @@ scratch, planning and implementing features one by one as we go.
 
 ## Workflow
 
-We will implement a truly agile workflow, with incremental and iterative
-development.
+We will adhere to a strict and truly agile workflow, with incremental and
+iterative development.
 
 ## Features
 
@@ -34,10 +34,10 @@ implementation details on how Forge do things. This will be a clean-room
 re-implementation of selected features from scratch.
 
  - PHP environment management: Installs and manages PHP, web servers (Caddy/Nginx), and system packages so you don’t have to deal with OS-level setup.
- - Site deployment: Connect a Git repo and deploy automatically on push or manually with one click. (only GitHub in first iteration)
+ - Site deployment: Connect a Git repo and deploy automatically by polling (for now) or manually with one click. (only GitHub in first iteration)
  - Zero-downtime deployments: Deploy updates without taking your app offline using atomic release strategies. (green/blue folder swap strategy)
  - SSL management: Issue and auto-renew free TLS certificates (via Let’s Encrypt) with a single action.
- - Database provisioning: Create and manage MySQL/PostgreSQL databases directly from the UI. We will use shared database containers, but create isolated users/databases for each project. 
+ - Database provisioning: Create and manage MySQL/PostgreSQL databases directly from the UI. We will use shared database containers, but create isolated users/databases for each site. 
  - Environment configuration: Manage .env variables securely per site without SSH access.
  - Site isolation: Each site is sandboxed at the server level to avoid cross-project interference.
  - Quick site creation: Spin up new sites with predefined configs (PHP versions, domains, etc.).
@@ -87,15 +87,15 @@ At its core, the project is essentially a docker orchestrator, allowing for quic
 - We will implement the Loopia domain management api for dynamic and automatic management of domain  records. This will later be expanded into a plugin system allowing for different domain providers.
 - We will use blade templates for web views. No react, svelte or vue at this stage
 
-### The plan
+## The plan
 
 Create a small, throwaway, POC, only to confirm basic platform requirements.
 This probably looks something like this:
 
-1. Spin up a minimal (alpine?) container mounting the docker socket for testing basic control of docker from inside a container.
+1. Spin up a minimal (alpine?) container mounting the docker socket for testing basic control of docker (through cli/docker exec?) from inside a container.
 2. add on a caddy container. Bind-mount a caddy config file set up to reply 200 "this works"
-3. add a second basic container containing git. Set up to manually pull a static site from public repo named volume? No bind mount here). Expose this to caddy and have caddy serve this (no nginx etc required, caddy does this full well on it's own).
-4. Add on basic (alpine+php? Research this) container for serving bind-mounted base Laravel created from starter kit. DB should not be needed but if it is we will just use SQLite
-5. Create basic docker orchestration features as artisan commands. List containers, pull containers, start and stop
-6. Create basic caddy api integration to reverse proxy created containers as artisan commands.
-7. tear down project and start from scratch.
+3. add a second basic container containing git. Set up to manually pull a static site from public repo (named volume? No bind mount here). Expose this to caddy and have caddy statically serve this (no nginx etc required, caddy does this full well on it's own).
+4. Add on minimal (alpine+php? Research this) container for serving bind-mounted base Laravel created from starter kit. DB should not be needed at this stage but if it is we will just use SQLite
+5. implement basic docker orchestration features as artisan commands. List containers, pull containers, start and stop, run commands.
+6. implement basic caddy api (for now, will decide actual implementation for MVP) integration to reverse proxy created containers as artisan commands.
+7. tear down the project and start from scratch.
