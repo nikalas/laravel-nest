@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  # 1. Docker control test container
+  docker-test:
+    image: alpine:latest
+    container_name: docker_test
+    command: ["sleep", "infinity"]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    stdin_open: true
+    tty: true
+
+  # 2. Caddy for all routing
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+      - git_site_data:/site
+    # depends_on:
+    #   - laravel
+
+  # 3. Git static site container
+  git-site:
+    image: alpine/git:latest
+    container_name: git_site
+    volumes:
+      - git_site_data:/site
+    #command: ["sh", "-c", "git clone https://github.com/public/repo.git /site || true && sleep infinity"]
+    command: ["sleep", "infinity"]
+
+  # 4. Laravel app container
+  laravel:
+    image: jcadima/laravel-php:8.2
+    container_name: laravel_app
+    working_dir: /var/www/laravel
+    volumes:
+      - ./laravel:/var/www/laravel:delegated
+    command: ["php", "-S", "0.0.0.0:8000", "-t", "public"]
+    ports:
+      - "8000:8000"
+
+volumes:
+  caddy_data:
+  caddy_config:
+  git_site_data:

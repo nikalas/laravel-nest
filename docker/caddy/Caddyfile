@@ -1,0 +1,12 @@
+hi.localhost {
+    respond "this works" 200
+}
+
+static.localhost {
+    root * /site
+    file_server
+}
+
+app.localhost {
+    reverse_proxy laravel:8000
+}
