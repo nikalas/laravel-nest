@@ -1,12 +1,16 @@
-hi.localhost {
-    respond "this works" 200
+{
+	debug
 }
 
-static.localhost {
-    root * /site
-    file_server
+http://hi.localhost {
+	respond "this works" 200
 }
 
-app.localhost {
-    reverse_proxy laravel:8000
+http://static.localhost {
+	root * /site
+	file_server
+}
+
+http://app.localhost {
+	reverse_proxy laravel:8000
 }
