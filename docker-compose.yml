@@ -34,6 +34,26 @@ services:
     #command: ["sh", "-c", "git clone https://github.com/public/repo.git /site || true && sleep infinity"]
     command: ["sleep", "infinity"]
 
+  # 4. Docker-socket-proxy
+  proxy:
+    privileged: true
+    image: tecnativa/docker-socket-proxy
+    container_name: dproxy
+    ports: 
+      - "2375:2375"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      ALLOW_START: 1
+      ALLOW_STOP: 1
+      ALLOW_RESTART: 1
+      CONTAINERS: 1
+      INFO: 1
+      PING: 1
+      AUTH: 1
+      POST: 1
+      EXEC: 1
+
   # 4. Laravel app container
   laravel:
     image: jcadima/laravel-php:8.2
@@ -44,6 +64,7 @@ services:
     command: ["php", "-S", "0.0.0.0:8000", "-t", "public"]
     ports:
       - "8000:8000"
+
 
 volumes:
   caddy_data:
