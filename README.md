@@ -1,6 +1,6 @@
-#  Laravel pulse (working name)
+#  Laravel Nest (working name)
 
-Laravel Pulse is a free, self contained tool for provisioning webapps and sites
+Laravel Nest is a free, self contained tool for provisioning webapps and sites
 locally.  It is essentially a lightweight, self hosted service providing many of
 the features of Laravel forge, built with Laravel itself and distributed in
 container form.
