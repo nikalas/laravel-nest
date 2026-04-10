@@ -17,7 +17,9 @@ Confirm base platform requirements and workability: Docker orchestration, Caddy 
 ## In Progress
 
 - [ ] Git-based site deployment with shared volume
-    - [ ] Create a public test repo with static site content
+    - [ ] Test repo: git@github.com:nikalas/static-site.git
+    - [ ] Manually pull repo with git_site container
+    - [ ] If pull fails, clone the repo with git_site container
     - [ ] Configure git_site container to clone repo on startup
     - [ ] Verify content appears in shared volume
     - [ ] Confirm Caddy serves static files at http://static.localhost
