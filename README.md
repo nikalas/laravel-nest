@@ -87,15 +87,6 @@ At its core, the project is essentially a docker orchestrator, allowing for quic
 - We will implement the Loopia domain management api for dynamic and automatic management of domain  records. This will later be expanded into a plugin system allowing for different domain providers.
 - We will use blade templates for web views. No react, svelte or vue at this stage
 
-## The plan
+## Status
 
-Create a small, throwaway, POC, only to confirm basic platform requirements.
-This probably looks something like this:
-
-1. Spin up a minimal (alpine?) container mounting the docker socket for testing basic control of docker (through cli/docker exec?) from inside a container.
-2. add on a caddy container. Bind-mount a caddy config file set up to reply 200 "this works"
-3. add a second basic container containing git. Set up to manually pull a static site from public repo (named volume? No bind mount here). Expose this to caddy and have caddy statically serve this (no nginx etc required, caddy does this full well on it's own).
-4. Add on minimal (alpine+php? Research this) container for serving bind-mounted base Laravel created from starter kit. DB should not be needed at this stage but if it is we will just use SQLite
-5. implement basic docker orchestration features as artisan commands. List containers, pull containers, start and stop, run commands.
-6. implement basic caddy api (for now, will decide actual implementation for MVP) integration to reverse proxy created containers as artisan commands.
-7. tear down the project and start from scratch.
+See [STATUS.md](./STATUS.md)
